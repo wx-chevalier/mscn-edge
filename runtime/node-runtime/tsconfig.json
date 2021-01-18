@@ -1,0 +1,14 @@
+{
+  "extends": "@m-fe/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["packages/rtw-host-app/src/*"]
+    },
+    "strictFunctionTypes": false,
+    "strictNullChecks": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "downlevelIteration": true
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}

@@ -1,0 +1,20 @@
+name: "{{.RuleAppName}}"
+namespace: "{{.Namespace}}"
+selector: "baetyl-node-name={{.NodeName}}"
+labels:
+  baetyl-cloud-system: "true"
+type: "container"
+system: true
+services:
+  - name: "baetyl-rule"
+    image: "{{GetProperty "baetyl-rule-image"}}"
+    replica: 1
+    volumeMounts:
+      - name: "rule-conf"
+        mountPath: "/etc/baetyl"
+        readOnly: true
+volumes:
+  - name: "rule-conf"
+    config:
+      name: "{{.RuleConfName}}"
+      version: "{{.RuleConfVersion}}"

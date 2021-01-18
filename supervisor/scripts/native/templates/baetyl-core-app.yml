@@ -1,0 +1,50 @@
+name: "{{.CoreAppName}}"
+namespace: "{{.Namespace}}"
+selector: "baetyl-node-name={{.NodeName}}"
+labels:
+  baetyl-cloud-system: "true"
+  resource-invisible: "true"
+type: "container"
+system: true
+services:
+  - name: "baetyl-core"
+    image: "{{GetProperty "baetyl-image"}}"
+    replica: 1
+    args:
+      - "core"
+    volumeMounts:
+      - name: "core-conf"
+        mountPath: "/etc/baetyl"
+        readOnly: true
+      - name: "node-cert"
+        mountPath: "/var/lib/baetyl/node"
+      - name: "core-store-path"
+        mountPath: "/var/lib/baetyl/store"
+      - name: "object-download-path"
+        mountPath: "/var/lib/baetyl/object"
+      - name: "host-root-path"
+        mountPath: "/var/lib/baetyl/host"
+    ports:
+      - containerPort: 80
+        hostPort: {{.CoreAPIPort}}
+        protocol: "TCP"
+    security:
+      privileged: true
+volumes:
+  - name: "core-conf"
+    config:
+      name: "{{.CoreConfName}}"
+      version: "{{.CoreConfVersion}}"
+  - name: "node-cert"
+    secret:
+      name: "{{.NodeCertName}}"
+      version: "{{.NodeCertVersion}}"
+  - name: "core-store-path"
+    hostPath:
+      path: "{{.BAETYL_HOST_PATH_LIB}}/core/store"
+  - name: "object-download-path"
+    hostPath:
+      path: "{{.BAETYL_HOST_PATH_LIB}}/object"
+  - name: "host-root-path"
+    hostPath:
+      path: "{{.BAETYL_HOST_PATH_LIB}}/host"

@@ -1,0 +1,24 @@
+name: "{{.FunctionAppName}}"
+namespace: "{{.Namespace}}"
+selector: "baetyl-node-name={{.NodeName}}"
+labels:
+  baetyl-cloud-system: "true"
+  resource-invisible: "true"
+type: "container"
+system: true
+services:
+  - name: "baetyl-function"
+    image: "{{GetProperty "baetyl-function-image"}}"
+    replica: 1
+    volumeMounts:
+      - name: "func-conf"
+        mountPath: "/etc/baetyl"
+        readOnly: true
+    ports:
+      - containerPort: 80
+        protocol: "TCP"
+volumes:
+  - name: "func-conf"
+    config:
+      name: "{{.FunctionConfName}}"
+      version: "{{.FunctionConfVersion}}"

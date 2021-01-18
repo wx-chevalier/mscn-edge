@@ -1,0 +1,40 @@
+# Change database's url with real account and address.
+# Go into scripts/demo/native fold in this project, then start baetyl-cloud by ../../../output/baetyl-cloud -c ./conf/conf.yml
+
+adminServer:
+  port: ":9004"
+
+httplink:
+  port: ":9005"
+  ca: "./certs/client_ca.crt"
+  cert: "./certs/server.crt"
+  key: "./certs/server.key"
+
+initServer:
+  port: ":9003"
+  ca: "./certs/server_ca.crt"
+  cert: "./certs/server.crt"
+  key: "./certs/server.key"
+
+template:
+  path: "./templates"
+
+kube:
+  outCluster: true
+  configPath: ./conf/kubeconfig.yml
+
+database:
+  type: "mysql"
+  # kubectl port-forward --namespace default svc/mariadb 3306:3306
+  url: "root:secretpassword@(localhost:3306)/baetyl_cloud?charset=utf8&parseTime=true"
+
+defaultpki:
+  rootCAFile: "./certs/client_ca.crt"
+  rootCAKeyFile: "./certs/client_ca.key"
+  persistent: "database"
+
+defaultauth:
+  keyFile: "./conf/token.key"
+
+logger:
+  level: debug

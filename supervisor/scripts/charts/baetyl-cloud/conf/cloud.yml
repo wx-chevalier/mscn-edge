@@ -1,0 +1,37 @@
+adminServer:
+  port: ":9004"
+
+httplink:
+  port: ":9005"
+  ca: "/etc/certs/client_ca.crt"
+  cert: "/etc/certs/server.crt"
+  key: "/etc/certs/server.key"
+
+initServer:
+  port: ":9003"
+  ca: "/etc/certs/server_ca.crt"
+  cert: "/etc/certs/server.crt"
+  key: "/etc/certs/server.key"
+
+plugin:
+  modelStorage: "kubernetes"
+  databaseStorage: "database"
+
+template:
+  path: "/etc/templates"
+
+database:
+  type: "mysql"
+  url: "root:secretpassword@(mariadb:3306)/baetyl_cloud?charset=utf8&parseTime=true"
+
+defaultpki:
+  rootCAFile: "/etc/certs/client_ca.crt"
+  rootCAKeyFile: "/etc/certs/client_ca.key"
+  rootCertId : "98ec3bc552f0478298aa1c6702a95427"
+  persistent: "database"
+
+defaultauth:
+  keyFile: "/etc/baetyl/token.key"
+
+logger:
+  level: debug
